@@ -1,7 +1,7 @@
 import dotenv  from 'dotenv'
 dotenv.config()
 
-export const PORT=process.env.PORT
+export const PORT=process.env.PORT || 5050
 export const DATABASE=process.env.DATABASE_URL
 
 export const JWT_KEY=process.env.JWT_SECRET
