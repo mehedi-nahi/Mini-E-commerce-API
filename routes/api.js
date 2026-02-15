@@ -6,7 +6,7 @@ import * as ProductController from "../app/controllers/ProductController.js";
 import * as CategoryController from "../app/controllers/CategoryController.js";
 import * as CartListController from "../app/controllers/CartListController.js";
 import * as InvoiceController from "../app/controllers/InvoiceController.js";
-import * as WishListController from "../app/controllers/WishlistController.js";
+import * as WishListController from "../app/controllers/WishListController.js";
 import AuthMiddleware from "../app/middlewares/AuthMiddleware.js";
 import {isAdmin, isCustomer} from "../app/middlewares/RoleMiddleware.js";
 

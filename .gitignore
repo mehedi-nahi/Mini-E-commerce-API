@@ -37,3 +37,10 @@ build/
 
 # Coverage
 coverage/
+
+# Deployment documentation (contains sensitive info)
+RENDER_DEPLOYMENT.md
+RENDER_ENV_VARS.txt
+DEPLOYMENT_NOTES.md
+
+

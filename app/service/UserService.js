@@ -13,7 +13,13 @@ export const LoginService = async (req) => {
         //await SendEmail(email,EmailText,EmailSubject);
         await UserModel.updateOne({email:email},{$set:{otp:code}},{upsert:true});
 
-        return {status:true,message:"Verification code sent to your email."};
+        // Return OTP in development mode (since email doesn't work)
+        // In production, remove the 'otp' field from response
+        return {
+            status:true,
+            message:"Verification code generated. (Email service unavailable - OTP returned in response for testing)",
+            otp: code // ⚠️ ONLY FOR TESTING - Remove in production
+        };
     }
     catch (e) {
         return { status: false, message: e.message }
