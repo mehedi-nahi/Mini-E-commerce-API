@@ -45,7 +45,7 @@ DEPLOYMENT_NOTES.md
 
 # Test data and credentials (contains dummy data and test users)
 seedData.js
-TEST_CREDENTIALS.md
+SEED_GUIDE.md
 *.postman_collection.json
 
 

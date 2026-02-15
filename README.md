@@ -983,43 +983,332 @@ AppifyDevs/
 
 ## 🧪 Testing
 
-### Manual Testing with Postman
+### 🌐 Live API Base URL
 
-1. **Import Collection** (if available)
-2. **Set Environment Variables:**
-   - `base_url`: `http://localhost:5050/api`
-   - `token`: Auto-filled after login
+```
+https://mini-e-commerce-api-1.onrender.com
+```
 
-3. **Test Workflow:**
-   ```
-   Login → Verify OTP → Browse Products → Add to Cart → Place Order
-   ```
+> ⚠️ **Note:** Free tier may sleep after inactivity. First request takes ~30 seconds to wake up.
 
-### Testing Checklist
+---
 
-- [ ] User registration and login (OTP flow)
-- [ ] Admin can create/update/delete products
-- [ ] Customer **cannot** access admin routes (403)
+### 📡 Live API Endpoints
+
+#### 🔓 **Public Endpoints** (No Authentication Required)
+
+##### Authentication
+```bash
+# Login (Get OTP)
+POST https://mini-e-commerce-api-1.onrender.com/api/Login
+Body: { "email": "customer@test.com" }
+
+# Verify Login (Get Token)
+POST https://mini-e-commerce-api-1.onrender.com/api/VerifyLogin
+Body: { "email": "customer@test.com", "otp": "123456" }
+```
+
+##### Browse Products
+```bash
+# Get All Brands
+GET https://mini-e-commerce-api-1.onrender.com/api/BrandList
+
+# Get All Categories
+GET https://mini-e-commerce-api-1.onrender.com/api/CategoryList
+
+# Get Products by Category
+GET https://mini-e-commerce-api-1.onrender.com/api/ProductListByCategory/{CategoryID}
+
+# Get Products by Brand
+GET https://mini-e-commerce-api-1.onrender.com/api/ProductListByBrand/{BrandID}
+
+# Get Products by Remark (New, Featured, Popular, Sale)
+GET https://mini-e-commerce-api-1.onrender.com/api/ProductListByRemark/{Remark}
+
+# Get Slider Products
+GET https://mini-e-commerce-api-1.onrender.com/api/ProductListBySlider
+
+# Get Product Details
+GET https://mini-e-commerce-api-1.onrender.com/api/ProductDetailsID/{ProductID}
+
+# Search Products by Keyword
+GET https://mini-e-commerce-api-1.onrender.com/api/ProductListByKeyword/{keyword}
+
+# Get Product Reviews
+GET https://mini-e-commerce-api-1.onrender.com/api/ProductReviewListByID/{ProductID}
+```
+
+---
+
+#### 👑 **Admin Endpoints** (Requires Admin Token)
+
+```bash
+# Create Product
+POST https://mini-e-commerce-api-1.onrender.com/api/CreateProduct
+Header: token: YOUR_ADMIN_TOKEN
+Body: {
+  "title": "Product Name",
+  "shortDesc": "Description",
+  "price": 999,
+  "discount": 10,
+  "discountPrice": 899,
+  "image": "https://example.com/image.jpg",
+  "start": "4.5",
+  "stock": true,
+  "remark": "New",
+  "categoryId": "CATEGORY_ID",
+  "brandID": "BRAND_ID"
+}
+
+# Update Product
+POST https://mini-e-commerce-api-1.onrender.com/api/UpdateProduct/{id}
+Header: token: YOUR_ADMIN_TOKEN
+Body: { "title": "Updated Name", "price": 899 }
+
+# Update Stock
+POST https://mini-e-commerce-api-1.onrender.com/api/UpdateStock/{id}
+Header: token: YOUR_ADMIN_TOKEN
+Body: { "stock": false }
+
+# Delete Product
+DELETE https://mini-e-commerce-api-1.onrender.com/api/DeleteProduct/{id}
+Header: token: YOUR_ADMIN_TOKEN
+```
+
+---
+
+#### 🛒 **Customer Endpoints** (Requires Customer Token)
+
+##### Profile Management
+```bash
+# Create Profile
+POST https://mini-e-commerce-api-1.onrender.com/api/CreateUserProfile
+Header: token: YOUR_TOKEN
+Body: {
+  "cus_name": "John Doe",
+  "cus_add": "123 Street",
+  "cus_city": "New York",
+  "cus_country": "USA",
+  "cus_postcode": "10001",
+  "cus_phone": "+1234567890",
+  "cus_state": "NY",
+  "ship_name": "John Doe",
+  "ship_add": "123 Street",
+  "ship_city": "New York",
+  "ship_country": "USA",
+  "ship_postcode": "10001",
+  "ship_phone": "+1234567890",
+  "ship_state": "NY"
+}
+
+# Update Profile
+POST https://mini-e-commerce-api-1.onrender.com/api/UpdateUserProfile
+Header: token: YOUR_TOKEN
+Body: { "cus_name": "Jane Doe" }
+
+# Read Profile
+GET https://mini-e-commerce-api-1.onrender.com/api/ReadUserProfile
+Header: token: YOUR_TOKEN
+```
+
+##### Shopping Cart
+```bash
+# Add to Cart
+POST https://mini-e-commerce-api-1.onrender.com/api/CreateCart
+Header: token: YOUR_TOKEN
+Body: {
+  "productID": "PRODUCT_ID",
+  "qty": 2,
+  "color": "Black",
+  "size": "256GB"
+}
+
+# View Cart
+GET https://mini-e-commerce-api-1.onrender.com/api/ReadCartList
+Header: token: YOUR_TOKEN
+
+# Update Cart
+POST https://mini-e-commerce-api-1.onrender.com/api/UpdateCart
+Header: token: YOUR_TOKEN
+Body: { "cartID": "CART_ID", "qty": 3 }
+
+# Remove from Cart
+POST https://mini-e-commerce-api-1.onrender.com/api/RemoveCart
+Header: token: YOUR_TOKEN
+Body: { "cartID": "CART_ID" }
+```
+
+##### Wishlist
+```bash
+# Add to Wishlist
+POST https://mini-e-commerce-api-1.onrender.com/api/CreateWish
+Header: token: YOUR_TOKEN
+Body: { "productID": "PRODUCT_ID" }
+
+# View Wishlist
+GET https://mini-e-commerce-api-1.onrender.com/api/ReadWishList
+Header: token: YOUR_TOKEN
+
+# Remove from Wishlist
+POST https://mini-e-commerce-api-1.onrender.com/api/RemoveWish
+Header: token: YOUR_TOKEN
+Body: { "wishID": "WISH_ID" }
+```
+
+##### Reviews
+```bash
+# Create Review
+POST https://mini-e-commerce-api-1.onrender.com/api/CreateProductReview
+Header: token: YOUR_TOKEN
+Body: {
+  "productID": "PRODUCT_ID",
+  "des": "Great product!",
+  "rating": "5"
+}
+
+# Update Review
+POST https://mini-e-commerce-api-1.onrender.com/api/UpdateProductReview
+Header: token: YOUR_TOKEN
+Body: {
+  "reviewID": "REVIEW_ID",
+  "des": "Updated review",
+  "rating": "4"
+}
+```
+
+##### Orders & Invoices
+```bash
+# Place Order (Create Invoice)
+POST https://mini-e-commerce-api-1.onrender.com/api/CreateInvoice
+Header: token: YOUR_TOKEN
+
+# View My Orders
+GET https://mini-e-commerce-api-1.onrender.com/api/InvoiceList
+Header: token: YOUR_TOKEN
+
+# View Order Details
+GET https://mini-e-commerce-api-1.onrender.com/api/InvoiceProductList/{InvoiceID}
+Header: token: YOUR_TOKEN
+```
+
+##### Payment Callbacks
+```bash
+# Payment Success
+POST https://mini-e-commerce-api-1.onrender.com/api/PaymentSuccessful/{trxID}
+
+# Payment Failed
+POST https://mini-e-commerce-api-1.onrender.com/api/PaymentFail/{trxID}
+
+# Payment Cancelled
+POST https://mini-e-commerce-api-1.onrender.com/api/PaymentCancel/{trxID}
+
+# Payment IPN
+POST https://mini-e-commerce-api-1.onrender.com/api/PaymentIPN/{trxID}
+```
+
+---
+[TEST_CREDENTIALS.md](TEST_CREDENTIALS.md)
+### 🧪 Testing Workflow
+
+#### Quick Test (No Auth Required)
+```bash
+# Test if API is live
+curl https://mini-e-commerce-api-1.onrender.com/api/BrandList
+```
+
+#### Complete Shopping Flow
+```bash
+# 1. Login
+curl -X POST https://mini-e-commerce-api-1.onrender.com/api/Login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"customer@test.com"}'
+
+# 2. Verify (use OTP from response)
+curl -X POST https://mini-e-commerce-api-1.onrender.com/api/VerifyLogin \
+  -H "Content-Type: application/json" \
+  -d '{"email":"customer@test.com","otp":"123456"}'
+
+# 3. Browse Products
+curl https://mini-e-commerce-api-1.onrender.com/api/ProductListByRemark/New
+
+# 4. Add to Cart (use token from step 2)
+curl -X POST https://mini-e-commerce-api-1.onrender.com/api/CreateCart \
+  -H "Content-Type: application/json" \
+  -H "token: YOUR_TOKEN" \
+  -d '{"productID":"PRODUCT_ID","qty":1,"color":"Black","size":"M"}'
+
+# 5. Place Order
+curl -X POST https://mini-e-commerce-api-1.onrender.com/api/CreateInvoice \
+  -H "token: YOUR_TOKEN"
+```
+
+---
+
+### ✅ Testing Checklist
+
+- [ ] API is live and responsive
+- [ ] Login returns OTP in response
+- [ ] Verify login returns JWT token
+- [ ] Public endpoints work without auth
+- [ ] Admin endpoints require admin token
+- [ ] Customer endpoints require customer token
 - [ ] Stock validation prevents overselling
 - [ ] Order placement deducts stock correctly
-- [ ] Cart operations (add/update/remove)
-- [ ] Wishlist functionality
-- [ ] Product search and filtering
-- [ ] Order history retrieval
-- [ ] Transaction rollback on error
+- [ ] Cart operations work (add/update/remove)
+- [ ] Wishlist functionality works
+- [ ] Product search returns results
+- [ ] Reviews can be created and viewed
+- [ ] Role-based access control enforced (403 for wrong role)
 
-### Sample Test Cases
+---
 
-**Test: Stock Validation**
-1. Set product stock to 5
-2. Add 10 items to cart
-3. Place order
-4. **Expected:** Error - Insufficient stock
+### 🔬 Sample Test Cases
 
-**Test: Role Authorization**
-1. Login as customer
-2. Try to create product
-3. **Expected:** 403 Forbidden
+#### Test 1: Role Authorization
+```bash
+# Login as customer
+POST /api/Login → customer@test.com
+
+# Try admin endpoint (should fail)
+POST /api/CreateProduct
+Expected: 403 Forbidden - "Access denied. Admin role required."
+```
+
+#### Test 2: Stock Validation
+```bash
+# Add product with limited stock to cart
+POST /api/CreateCart → qty: 100
+
+# Try to place order
+POST /api/CreateInvoice
+Expected: Error if stock insufficient
+```
+
+#### Test 3: Authentication Required
+```bash
+# Try protected endpoint without token
+GET /api/ReadUserProfile
+Expected: 401 Unauthorized
+```
+
+---
+
+### 📱 Postman Testing
+
+**Import Collection:**
+1. Download: [Coming Soon]
+2. Import into Postman
+3. Set environment variable:
+   - `BASE_URL`: `https://mini-e-commerce-api-1.onrender.com`
+4. Start testing!
+
+**Environment Variables:**
+```json
+{
+  "BASE_URL": "https://mini-e-commerce-api-1.onrender.com",
+  "TOKEN": "YOUR_JWT_TOKEN_HERE"
+}
+```
 
 ---
 
