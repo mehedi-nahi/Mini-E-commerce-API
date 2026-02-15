@@ -43,4 +43,9 @@ RENDER_DEPLOYMENT.md
 RENDER_ENV_VARS.txt
 DEPLOYMENT_NOTES.md
 
+# Test data and credentials (contains dummy data and test users)
+seedData.js
+TEST_CREDENTIALS.md
+*.postman_collection.json
+
 
