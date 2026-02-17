@@ -2,12 +2,8 @@
 
 # 🛒 Mini E-Commerce API
 
-### Production-Ready Backend for Online Shopping Platform
+### Backend for Online Shopping Platform
 
-[![Node.js](https://img.shields.io/badge/Node.js-22.9.0-green.svg)](https://nodejs.org/)
-[![Express.js](https://img.shields.io/badge/Express.js-4.18.2-blue.svg)](https://expressjs.com/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-7.0-green.svg)](https://www.mongodb.com/)
-[![License](https://img.shields.io/badge/License-ISC-yellow.svg)](LICENSE)
 
 **A robust, scalable backend system** featuring authentication, role-based access control (RBAC), product management, shopping cart operations, and order processing with **atomic transaction handling** for data consistency.
 
@@ -33,7 +29,10 @@
 
 ---
 
-## 🛠️ Tech Stack
+## Postman DOCUMENTATION: 
+https://documenter.getpostman.com/view/36192012/2sBXcDFLrU
+
+##  Tech Stack
 
 <table>
 <tr>
@@ -62,7 +61,6 @@
 ### Additional
 - **axios** - HTTP client
 - **nodemailer** `v6.9.1` - Email service
-- **form-data** - Multipart forms
 
 </td>
 </tr>
@@ -70,7 +68,7 @@
 
 ---
 
-## ✨ Features
+##  Features
 
 <table>
 <tr>
